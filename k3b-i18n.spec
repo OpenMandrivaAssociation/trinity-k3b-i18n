@@ -5,21 +5,11 @@
 %if "%{?tde_version}" == ""
 %define tde_version 14.1.5
 %endif
-%define pkg_rel 2
+%define pkg_rel 3
 
 %define tde_pkg k3b-i18n
 %define tde_prefix /opt/trinity
-%define tde_appdir %{tde_datadir}/applications
-%define tde_bindir %{tde_prefix}/bin
-%define tde_datadir %{tde_prefix}/share
-%define tde_docdir %{tde_datadir}/doc
-%define tde_includedir %{tde_prefix}/include
-%define tde_libdir %{tde_prefix}/%{_lib}
-%define tde_mandir %{tde_datadir}/man
-%define tde_tdeappdir %{tde_datadir}/applications/tde
-%define tde_tdedocdir %{tde_docdir}/tde
-%define tde_tdeincludedir %{tde_includedir}/tde
-%define tde_tdelibdir %{tde_libdir}/trinity
+
 
 %undefine __brp_remove_la_files
 %define dont_remove_libtool_files 1
@@ -41,8 +31,6 @@ URL:			http://www.trinitydesktop.org/
 
 License:	GPLv2+
 
-#Vendor:		Trinity Desktop
-#Packager:	Francois Andriot <francois.andriot@free.fr>
 
 BuildArch:	noarch
 
@@ -54,20 +42,12 @@ AutoReq: no
 Source0:		https://mirror.ppa.trinitydesktop.org/trinity/releases/R%{tde_version}/main/applications/multimedia/%{tarball_name}-%{tde_version}%{?preversion:~%{preversion}}.tar.xz
 
 BuildSystem:    cmake
+
 BuildOption:    -DCMAKE_BUILD_TYPE="RelWithDebInfo"
-BuildOption:    -DCMAKE_SKIP_RPATH=OFF
-BuildOption:    -DCMAKE_SKIP_INSTALL_RPATH=OFF
-BuildOption:    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-BuildOption:    -DCMAKE_INSTALL_RPATH="%{tde_libdir}"
-BuildOption:    -DCMAKE_NO_BUILTIN_CHRPATH=ON
-BuildOption:    -DCMAKE_PROGRAM_PATH="%{tde_bindir}"
-BuildOption:    -DWITH_GCC_VISIBILITY=ON
 BuildOption:    -DCMAKE_INSTALL_PREFIX=%{tde_prefix}
-BuildOption:    -DBIN_INSTALL_DIR=%{tde_bindir}
-BuildOption:    -DCONFIG_INSTALL_DIR="%{tde_confdir}"
-BuildOption:    -DINCLUDE_INSTALL_DIR=%{tde_tdeincludedir}
-BuildOption:    -DLIB_INSTALL_DIR=%{tde_libdir}
-BuildOption:    -DSHARE_INSTALL_PREFIX=%{tde_datadir}
+BuildOption:    -DINCLUDE_INSTALL_DIR=%{tde_prefix}/include/tde
+BuildOption:    -DSHARE_INSTALL_PREFIX=%{tde_prefix}/share
+BuildOption:    -DWITH_GCC_VISIBILITY=%{!?with_clang:ON}%{?with_clang:OFF}
 
 BuildRequires:	trinity-tdelibs-devel >= %{tde_version}
 BuildRequires:	trinity-tdebase-devel >= %{tde_version}
@@ -109,8 +89,8 @@ This package contains the Danish translations for K3B.
 
 %files Danish
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/da/k3b
-%{tde_datadir}/locale/da/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/da/k3b
+%{tde_prefix}/share/locale/da/LC_MESSAGES/*.mo
 
 ##########
 
@@ -127,8 +107,8 @@ This package contains the German translations for K3B.
 
 %files German
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/de/k3b
-%{tde_datadir}/locale/de/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/de/k3b
+%{tde_prefix}/share/locale/de/LC_MESSAGES/*.mo
 
 ##########
 
@@ -145,8 +125,8 @@ This package contains the greek translations for K3B.
 
 %files Greek
 %defattr(-,root,root,-)
-#%{tde_tdedocdir}/HTML/el/k3b
-%{tde_datadir}/locale/el/LC_MESSAGES/*.mo
+#%{tde_prefix}/share/doc/tde/HTML/el/k3b
+%{tde_prefix}/share/locale/el/LC_MESSAGES/*.mo
 
 ##########
 
@@ -163,8 +143,8 @@ This package contains the Spanish translations for K3B.
 
 %files Spanish
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/es/k3b
-%{tde_datadir}/locale/es/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/es/k3b
+%{tde_prefix}/share/locale/es/LC_MESSAGES/*.mo
 
 ##########
 
@@ -181,8 +161,8 @@ This package contains the Estonian translations for K3B.
 
 %files Estonian
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/et/k3b
-%{tde_datadir}/locale/et/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/et/k3b
+%{tde_prefix}/share/locale/et/LC_MESSAGES/*.mo
 
 ##########
 
@@ -199,8 +179,8 @@ This package contains the French translations for K3B.
 
 %files French
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/fr/k3b
-%{tde_datadir}/locale/fr/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/fr/k3b
+%{tde_prefix}/share/locale/fr/LC_MESSAGES/*.mo
 
 ##########
 
@@ -217,8 +197,8 @@ This package contains the Italian translations for K3B.
 
 %files Italian
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/it/k3b
-%{tde_datadir}/locale/it/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/it/k3b
+%{tde_prefix}/share/locale/it/LC_MESSAGES/*.mo
 
 ##########
 
@@ -235,8 +215,8 @@ This package contains the Dutch translations for K3B.
 
 %files Dutch
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/nl/k3b
-%{tde_datadir}/locale/nl/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/nl/k3b
+%{tde_prefix}/share/locale/nl/LC_MESSAGES/*.mo
 
 ##########
 
@@ -253,8 +233,8 @@ This package contains the Polish translations for K3B.
 
 %files Polish
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/pl/k3b
-%{tde_datadir}/locale/pl/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/pl/k3b
+%{tde_prefix}/share/locale/pl/LC_MESSAGES/*.mo
 
 ##########
 
@@ -271,8 +251,8 @@ This package contains the Portuguese translations for K3B.
 
 %files Portuguese
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/pt/k3b
-%{tde_datadir}/locale/pt/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/pt/k3b
+%{tde_prefix}/share/locale/pt/LC_MESSAGES/*.mo
 
 ##########
 
@@ -291,8 +271,8 @@ This package contains the Brazilian Portuguese translations for K3B.
 
 %files Brazil
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/pt_BR/k3b
-%{tde_datadir}/locale/pt_BR/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/pt_BR/k3b
+%{tde_prefix}/share/locale/pt_BR/LC_MESSAGES/*.mo
 
 ##########
 
@@ -309,8 +289,8 @@ This package contains the Russian translations for K3B.
 
 %files Russian
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/ru/k3b
-%{tde_datadir}/locale/ru/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/ru/k3b
+%{tde_prefix}/share/locale/ru/LC_MESSAGES/*.mo
 
 ##########
 
@@ -327,8 +307,8 @@ This package contains the Swedish translations for K3B.
 
 %files Swedish
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/sv/k3b
-%{tde_datadir}/locale/sv/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/sv/k3b
+%{tde_prefix}/share/locale/sv/LC_MESSAGES/*.mo
 
 ##########
 
@@ -345,55 +325,55 @@ This package contains the Ukrainian translations for K3B.
 
 %files Ukrainian
 %defattr(-,root,root,-)
-%{tde_tdedocdir}/HTML/uk/k3b
-%{tde_datadir}/locale/uk/LC_MESSAGES/*.mo
+%{tde_prefix}/share/doc/tde/HTML/uk/k3b
+%{tde_prefix}/share/locale/uk/LC_MESSAGES/*.mo
 
 
 %conf -p
 unset QTDIR QTINC QTLIB
-export PATH="%{tde_bindir}:${PATH}"
+export PATH="%{tde_prefix}/bin:${PATH}"
 
 
 %install -a
-%__rm -rf %{buildroot}%{tde_datadir}/locale/af
-%__rm -rf %{buildroot}%{tde_datadir}/locale/ar
-%__rm -rf %{buildroot}%{tde_datadir}/locale/bg
-%__rm -rf %{buildroot}%{tde_datadir}/locale/br
-%__rm -rf %{buildroot}%{tde_datadir}/locale/bs
-%__rm -rf %{buildroot}%{tde_datadir}/locale/ca
-%__rm -rf %{buildroot}%{tde_datadir}/locale/cs
-%__rm -rf %{buildroot}%{tde_datadir}/locale/cy
-%__rm -rf %{buildroot}%{tde_datadir}/locale/en_GB
-%__rm -rf %{buildroot}%{tde_datadir}/locale/es_AR
-%__rm -rf %{buildroot}%{tde_datadir}/locale/eu
-%__rm -rf %{buildroot}%{tde_datadir}/locale/fa
-%__rm -rf %{buildroot}%{tde_datadir}/locale/fi
-%__rm -rf %{buildroot}%{tde_datadir}/locale/ga
-%__rm -rf %{buildroot}%{tde_datadir}/locale/gl
-%__rm -rf %{buildroot}%{tde_datadir}/locale/he
-%__rm -rf %{buildroot}%{tde_datadir}/locale/hi
-%__rm -rf %{buildroot}%{tde_datadir}/locale/hu
-%__rm -rf %{buildroot}%{tde_datadir}/locale/is
-%__rm -rf %{buildroot}%{tde_datadir}/locale/ja
-%__rm -rf %{buildroot}%{tde_datadir}/locale/ka
-%__rm -rf %{buildroot}%{tde_datadir}/locale/km
-%__rm -rf %{buildroot}%{tde_datadir}/locale/lt
-%__rm -rf %{buildroot}%{tde_datadir}/locale/mk
-%__rm -rf %{buildroot}%{tde_datadir}/locale/ms
-%__rm -rf %{buildroot}%{tde_datadir}/locale/nb
-%__rm -rf %{buildroot}%{tde_datadir}/locale/nds
-%__rm -rf %{buildroot}%{tde_datadir}/locale/ne
-%__rm -rf %{buildroot}%{tde_datadir}/locale/nn
-%__rm -rf %{buildroot}%{tde_datadir}/locale/pa
-%__rm -rf %{buildroot}%{tde_datadir}/locale/rw
-%__rm -rf %{buildroot}%{tde_datadir}/locale/se
-%__rm -rf %{buildroot}%{tde_datadir}/locale/sk
-%__rm -rf %{buildroot}%{tde_datadir}/locale/sr
-%__rm -rf %{buildroot}%{tde_datadir}/locale/sr@Latn
-%__rm -rf %{buildroot}%{tde_datadir}/locale/ta
-%__rm -rf %{buildroot}%{tde_datadir}/locale/tr
-%__rm -rf %{buildroot}%{tde_datadir}/locale/uz
-%__rm -rf %{buildroot}%{tde_datadir}/locale/uz@cyrillic
-%__rm -rf %{buildroot}%{tde_datadir}/locale/zh_CN
-%__rm -rf %{buildroot}%{tde_datadir}/locale/zh_TW
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/af
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/ar
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/bg
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/br
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/bs
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/ca
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/cs
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/cy
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/en_GB
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/es_AR
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/eu
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/fa
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/fi
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/ga
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/gl
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/he
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/hi
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/hu
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/is
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/ja
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/ka
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/km
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/lt
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/mk
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/ms
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/nb
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/nds
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/ne
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/nn
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/pa
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/rw
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/se
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/sk
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/sr
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/sr@Latn
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/ta
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/tr
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/uz
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/uz@cyrillic
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/zh_CN
+%__rm -rf %{buildroot}%{tde_prefix}/share/locale/zh_TW
 
